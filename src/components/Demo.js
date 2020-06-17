@@ -1,9 +1,8 @@
 import React, { useReducer, useContext } from 'react'
+import MonContext from '../contexts/context'
 import Axios from 'axios'
 
 import { initialValues, reducer } from '../reducers/monReducer'
-
-const MonContext = React.createContext(null)
 
 const Demo = () => {
   const [{ name, loading }, dispatch] = useReducer(reducer, initialValues)
