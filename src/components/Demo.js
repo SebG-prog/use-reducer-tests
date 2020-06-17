@@ -2,20 +2,22 @@ import React, { useState } from 'react'
 import Axios from 'axios'
 
 const Demo = () => {
-  const [name, setName] = useState('Bob')
-  const [loading, setLoading] = useState(false)
+  const initialValues = {
+    name: 'Bob',
+    loading: false
+  }
+  const [state, setState] = useState(initialValues)
 
   const handleClick = () => {
-    setLoading(true)
+    setState({...state, loading: true})
     Axios.get('name.json').then(res => {
-      setName(res.data.name)
-      setLoading(false)
+      setState({...state, name: res.data.name, loading: false})
     })
   }
   return (
-    loading ? <div>Loading...</div> :
+    state.loading ? <div>Loading...</div> :
     <main>
-      <div>{name}</div>
+      <div>{state.name}</div>
       <button onClick={handleClick}>Click Me</button>
     </main>
   )
