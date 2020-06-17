@@ -4,9 +4,16 @@ import Axios from 'axios'
 import {initialValues, reducer} from '../reducers/monReducer'
 
 const Demo = () => {
-
   const [{name, loading}, dispatch] = useReducer(reducer, initialValues)
 
+  return (
+    <ChildComponent name={name} loading={loading} dispatch={dispatch}/>
+  )
+}
+
+export default Demo
+
+const ChildComponent = ({name, loading, dispatch}) => {
   const handleClick = () => {
     dispatch({ type: 'startGettingName' })
     Axios.get('name.json').then(res => {
@@ -21,5 +28,3 @@ const Demo = () => {
       </main>
   )
 }
-
-export default Demo
