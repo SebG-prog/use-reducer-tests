@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useReducer } from 'react'
 import Axios from 'axios'
 
 const reducer = (state, action) => {
@@ -17,14 +17,14 @@ const Demo = () => {
     name: 'Bob',
     loading: false
   }
-  const [state, setState] = useState(initialValues)
+  const [state, setState] = useReducer(reducer, initialValues)
 
   const handleClick = () => {
     const action = { type: 'startGettingName' }
-    setState(reducer(state, action))
+    setState(action)
     Axios.get('name.json').then(res => {
       const action = { type: 'endGettingName', name: res.data.name }
-      setState(reducer(state, action))
+      setState(action)
     })
   }
   return (
