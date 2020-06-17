@@ -1,19 +1,24 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useContext } from 'react'
 import Axios from 'axios'
 
-import {initialValues, reducer} from '../reducers/monReducer'
+import { initialValues, reducer } from '../reducers/monReducer'
+
+const MonContext = React.createContext(null)
 
 const Demo = () => {
-  const [{name, loading}, dispatch] = useReducer(reducer, initialValues)
+  const [{ name, loading }, dispatch] = useReducer(reducer, initialValues)
 
   return (
-    <ChildComponent name={name} loading={loading} dispatch={dispatch}/>
+    <MonContext.Provider value={dispatch}>
+      <ChildComponent name={name} loading={loading} />
+    </MonContext.Provider>
   )
 }
 
 export default Demo
 
-const ChildComponent = ({name, loading, dispatch}) => {
+const ChildComponent = ({ name, loading }) => {
+  const dispatch = useContext(MonContext)
   const handleClick = () => {
     dispatch({ type: 'startGettingName' })
     Axios.get('name.json').then(res => {
