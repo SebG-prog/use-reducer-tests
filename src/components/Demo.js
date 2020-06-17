@@ -17,20 +17,18 @@ const Demo = () => {
     name: 'Bob',
     loading: false
   }
-  const [state, setState] = useReducer(reducer, initialValues)
+  const [{name, loading}, dispatch] = useReducer(reducer, initialValues)
 
   const handleClick = () => {
-    const action = { type: 'startGettingName' }
-    setState(action)
+    dispatch({ type: 'startGettingName' })
     Axios.get('name.json').then(res => {
-      const action = { type: 'endGettingName', name: res.data.name }
-      setState(action)
+      dispatch({ type: 'endGettingName', name: res.data.name })
     })
   }
   return (
-    state.loading ? <div>Loading...</div> :
+    loading ? <div>Loading...</div> :
       <main>
-        <div>{state.name}</div>
+        <div>{name}</div>
         <button onClick={handleClick}>Click Me</button>
       </main>
   )
