@@ -1,13 +1,20 @@
-import React from 'react'
+import React, {useReducer} from 'react'
+
 import Demo from './components/Demo'
+
+import MonContext from './contexts/context'
+import { initialValues, reducer } from './reducers/monReducer'
 
 import './App.css'
 
 const App = () => {
+  const [state, dispatch] = useReducer(reducer, initialValues)
   return (
-    <div className="App">
-      <Demo />
-    </div>
+    <MonContext.Provider value={[state, dispatch]}>
+      <div className="App">
+        <Demo />
+      </div>
+    </MonContext.Provider>
   )
 }
 
